@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            text-align: center;
+            padding: 60px;
+        }
+        .error-box {
+            display: inline-block;
+            padding: 30px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            box-shadow: 2px 2px 12px #aaa;
+        }
+        .error-code {
+            font-size: 72px;
+            color: #e74c3c;
+        }
+        .error-message {
+            font-size: 18px;
+            color: #333;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+<div class="error-box">
+    <div class="error-code">Error</div>
+    <div class="error-message" th:text="${error}">Something went wrong!</div>
+    <a href="/">Go back to Home</a>
+</div>
+</body>
+</html>
