@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reports</title>
+</head>
+<body>
+<h2>Generate Reports</h2>
+
+<form method="post" th:action="@{/reports}">
+    <label>Select Date Range:</label><br/>
+    From: <input type="date" name="startDate" required/><br/>
+    To: <input type="date" name="endDate" required/><br/>
+    <button type="submit">Generate</button>
+</form>
+
+<a th:href="@{/admin-dashboard}">Back to Dashboard</a>
+</body>
+</html>
