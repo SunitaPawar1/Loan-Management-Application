@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+    <h2>Profile</h2>
+    <div id="user-details">
+        <!-- User details will be displayed here -->
+    </div>
+    <a href="/customer-dashboard">Back to Dashboard</a>| <a href="/login">Logout</a> 
+    </div>
+
+    <script>
+        async function fetchUserDetails() {
+            try {
+                const response = await fetch('/userprofile');
+                if (response.ok) {
+                    const user = await response.json();
+                    document.getElementById('user-details').innerHTML = `
+                        <p>Full Name: ${user.fullName}</p>
+                        <p>Email: ${user.email}</p>
+                        <p>Status: ${user.status}</p>
+                        <p>Phone: ${user.phone}</p>
+                    `;
+                } else {
+                    console.error('Failed to fetch user details');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Fetch user details on page load
+        window.onload = fetchUserDetails;
+    </script>
+    
+    
+</body>
+</html>

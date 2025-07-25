@@ -22,7 +22,7 @@ public class LoanAppLoginSuccessHandler implements AuthenticationSuccessHandler 
                                         Authentication authentication)
             throws IOException, ServletException {
 
-        log.info("Login successful for user: {}", authentication.getName());
+       // log.info("Login successful for user: {}", authentication.getName());
 
         for (GrantedAuthority auth : authentication.getAuthorities()) {
             String role = auth.getAuthority();

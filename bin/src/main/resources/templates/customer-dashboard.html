@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Dashboard</title>
+</head>
+<body>
+<h2>Welcome to the Customer Dashboard</h2>
+
+<p th:text="'Hello, ' + ${#authentication.name} + '!'"></p>
+
+<ul>
+    <li><a th:href="@{/loan/apply}">Apply for Loan</a></li>
+    <li><a th:href="@{/loan/history}">View Loan History</a></li>
+    <li><a th:href="@{/profile}">Profile</a></li>
+    <li><a th:href="@{/logout}">Logout</a></li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan History</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+    <script>
+        async function fetchLoanHistory() {
+            try {
+                const response = await fetch('/loan-history');
+                if (response.ok) {
+                const loanHistoryList = await response.json();
+                displayLoanHistory(loanHistoryList);
+                }
+                else
+                	{
+                	 throw new Error('No loan history found');
+                	//console.error('No Loan History details found');
+                	}
+            } catch (error) {
+                console.error('Error fetching loan history:', error);
+                document.getElementById('loan-history-table-body').innerHTML = error.message;
+            }
+        }
+
+        function displayLoanHistory(loanHistoryList) {
+            const tableBody = document.getElementById('loan-history-table-body');
+            tableBody.innerHTML = ''; // Clear existing content
+
+            loanHistoryList.forEach(loan => {
+                const row = document.createElement('tr');
+                
+                const loan_type_id = loan.loan_type_id == 1 ? 'Home Loan' : 
+                	loan.loan_type_id == 2 ? 'Car Loan' :
+                	loan.loan_type_id == 3 ? 'Personal Loan' :
+                	loan.loan_type_id == 4 ? 'Gold Loan' : '-';
+                
+                row.innerHTML = `
+                	<td>${loan.loanappid != null ? loan.loanappid : '-'}</td>
+                	<td>${loan_type_id}</td>
+                	<td>${loan.loan_amount != null ? loan.loan_amount : '-'}</td>
+                	<td>${loan.tenure != null ? loan.tenure : '-'}</td>
+                    <td>${loan.applied_on != null ? loan.applied_on : '-'}</td>
+                    <td>${loan.status != null ? loan.status : '-'}</td>
+                    <td>${loan.approved_on != null ? loan.approved_on : '-'}</td>
+                    <td>${loan.remarks != null ? loan.remarks : '-'}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        window.onload = fetchLoanHistory;
+    </script>
+</head>
+<body>
+<div class="container">
+    <h2>Loan History</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Loan Application Id</th>
+                <th>Loan Type</th>
+                <th>Loan Amount</th>
+                <th>Tenure</th>
+                <th>Applied on</th>
+                <th>Status</th>
+                <th>Approved on</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody id="loan-history-table-body">
+            <!-- Loan history will be populated here -->
+        </tbody>
+    </table>
+    
+    <a href="/customer-dashboard">Back to Dashboard</a>| <a href="/login">Logout</a>
+    </div>
+</body>
+</html>

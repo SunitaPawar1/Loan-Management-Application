@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Approved Loans</title></head>
+<body>
+<h2>Approved Loans</h2>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Applicant</th><th>Amount</th><th>Date</th>
+    </tr>
+    <tr th:each="loan : ${approvedLoans}">
+        <td th:text="${loan.id}"></td>
+        <td th:text="${loan.user.username}"></td>
+        <td th:text="${loan.amount}"></td>
+        <td th:text="${loan.updatedAt}"></td>
+    </tr>
+</table>
+<a th:href="@{/admin-dashboard}">Back to Dashboard</a>
+</body>
+</html>

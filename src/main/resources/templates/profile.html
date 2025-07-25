@@ -1,15 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Your Profile</title>
+    <meta charset="UTF-8">
+    <title>Profile</title>
 </head>
 <body>
-<h2>Profile Details</h2>
+    <h1>Profile</h1>
+    <div id="user-details">
+        <!-- User details will be displayed here -->
+    </div>
 
-<p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
-<p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
-<p><strong>Status:</strong> <span th:text="${user.status}"></span></p>
+    <script>
+        async function fetchUserDetails() {
+            try {
+                const response = await fetch('/userprofile');
+                if (response.ok) {
+                    const user = await response.json();
+                    document.getElementById('user-details').innerHTML = `
+                        <p>Full Name: ${user.fullname}</p>
+                        <p>Email: ${user.email}</p>
+                        <p>Status: ${user.status}</p>
+                        <p>Phone: ${user.phone}</p>
+                    `;
+                } else {
+                    console.error('Failed to fetch user details');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
 
-<a th:href="@{/customer-dashboard}">Back to Dashboard</a>
+        // Fetch user details on page load
+        window.onload = fetchUserDetails;
+    </script>
 </body>
 </html>
