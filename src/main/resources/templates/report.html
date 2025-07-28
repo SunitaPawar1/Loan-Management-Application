@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>Admin Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .report-item {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .report-item strong {
+            display: inline-block;
+            width: 180px;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Admin Reports</h2>
+
+    <div th:if="${report}">
+        <div class="report-item">
+            <strong>Total Loans:</strong> <span th:text="${report.totalLoans}"></span>
+        </div>
+        <div class="report-item">
+            <strong>Approved Loans:</strong> <span th:text="${report.approvedLoans}"></span>
+        </div>
+        <div class="report-item">
+            <strong>Pending Loans:</strong> <span th:text="${report.pendingLoans}"></span>
+        </div>
+        <div class="report-item">
+            <strong>Rejected Loans:</strong> <span th:text="${report.rejectedLoans}"></span>
+        </div>
+        <div class="report-item">
+            <strong>Total Customers:</strong> <span th:text="${report.totalCustomers}"></span>
+        </div>
+        <div class="report-item">
+            <strong>Total Banks:</strong> <span th:text="${report.totalBanks}"></span>
+        </div>
+    </div>
+    <div th:unless="${report}">
+        <p>No report data available.</p>
+    </div>
+
+    <a th:href="@{/admin-dashboard}" class="back-link">Back to Admin Dashboard</a>
+</div>
+</body>
+</html>

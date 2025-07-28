@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Rejected Loans</title>
+    <title>Approved Loans</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +45,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>Rejected Loans</h2>
+    <h2>Approved Loans</h2>
     <table border="1">
         <thead>
         <tr>
@@ -58,7 +58,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="loan : ${rejectedLoans}">
+        <tr th:each="loan : ${approvedLoans}">
             <td th:text="${loan.loanappid}"></td>
             <td th:text="${loan.loan_amount}"></td>
             <td th:text="${loan.tenure}"></td>
@@ -66,8 +66,8 @@
             <td th:text="${loan.applied_on}"></td>
             <td th:text="${loan.approved_on}"></td>
         </tr>
-        <tr th:if="${#lists.isEmpty(rejectedLoans)}">
-            <td colspan="8">No rejected loans.</td>
+        <tr th:if="${#lists.isEmpty(approvedLoans)}">
+            <td colspan="9">No approved loans.</td>
         </tr>
         </tbody>
     </table>

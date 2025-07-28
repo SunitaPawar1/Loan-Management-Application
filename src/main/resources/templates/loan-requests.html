@@ -1,29 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Loan Requests</title>
+    <title>Pending Loan Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .actions form {
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .actions button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .actions .approve-btn {
+            background-color: #28a745;
+        }
+        .actions .reject-btn {
+            background-color: #dc3545;
+        }
+        .actions button:hover {
+            opacity: 0.9;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-<h2>Loan Requests</h2>
+<div class="container">
+    <h2>Pending Loan Requests</h2>
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Applicant</th>
-        <th>Amount</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="loan : ${pendingLoans}">
-        <td th:text="${loan.id}"></td>
-        <td th:text="${loan.user.username}"></td>
-        <td th:text="${loan.amount}"></td>
-        <td>
-            <a th:href="@{'/loans/approve/' + ${loan.id}}">Approve</a> |
-            <a th:href="@{'/loans/reject/' + ${loan.id}}">Reject</a>
-        </td>
-    </tr>
-</table>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Loan ID</th>
+            <th>Principal Amount</th>
+            <th>Duration (Months)</th>
+            <th>Interest Rate</th>
+            <th>Loan Type</th>
+            <th>Customer ID</th>
+            <th>Application Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="loan : ${pendingLoans}">
+            <td th:text="${loan.loanId}"></td>
+            <td th:text="${loan.principalAmount}"></td>
+            <td th:text="${loan.duration}"></td>
+            <td th:text="${loan.interestRate}"></td>
+            <td th:text="${loan.loanType}"></td>
+            <td th:text="${loan.customerId}"></td>
+            <td th:text="${loan.applicationDate}"></td>
+            <td class="actions">
+                <form th:action="@{/admin/loans/{id}/approve(id=${loan.loanId})}" method="post">
+                    <button type="submit" class="approve-btn">Approve</button>
+                </form>
+                <form th:action="@{/admin/loans/{id}/reject(id=${loan.loanId})}" method="post">
+                    <button type="submit" class="reject-btn">Reject</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(pendingLoans)}">
+            <td colspan="8">No pending loan requests.</td>
+        </tr>
+        </tbody>
+    </table>
 
-<a th:href="@{/admin-dashboard}">Back to Dashboard</a>
+    <a th:href="@{/admin-dashboard}" class="back-link">Back to Admin Dashboard</a>
+</div>
 </body>
 </html>

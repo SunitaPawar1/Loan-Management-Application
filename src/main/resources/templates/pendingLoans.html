@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pending Loans</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #dee2e6;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td {
+            color: #212529;
+        }
+
+        .action-buttons button {
+            padding: 6px 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .approve-btn {
+            background-color: #28a745;
+        }
+
+        .reject-btn {
+            background-color: #dc3545;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .back-link {
+            margin-left: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Pending Loan Requests</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Loan ID</th>
+        <th>User ID</th>
+        <th>Applied On</th>
+        <th>Loan Amount</th>
+        <th>Status</th>
+        <th>Tenure (months)</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="loan : ${pendingLoans}" th:if="${loan != null}">
+        <td th:text="${loan.loanappid}"></td>
+        <td th:text="${loan.userId}"></td>
+        <td th:text="${loan.applied_on}"></td>
+        <td th:text="${loan.loan_amount}"></td>
+        <td th:text="${loan.status}"></td>
+        <td th:text="${loan.tenure}"></td>
+        <td class="action-buttons">
+            <form th:action="@{'/admin/loan/' + ${loan.loanappid} + '/approve'}" method="post">
+                <button type="submit" class="approve-btn" onclick="return confirm('Approve this loan?')">Approve</button>
+            </form>
+            <form th:action="@{'/admin/loan/' + ${loan.loanappid} + '/reject'}" method="post">
+                <button type="submit" class="reject-btn" onclick="return confirm('Reject this loan?')">Reject</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="text-align:center; margin-top: 20px;">
+    <a th:href="@{/admin-dashboard}" class="back-link">Back to Admin Dashboard</a> |
+    <a href="/login">Logout</a>
+</div>
+
+</body>
+</html>

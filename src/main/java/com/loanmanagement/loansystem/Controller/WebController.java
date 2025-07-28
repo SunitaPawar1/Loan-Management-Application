@@ -45,10 +45,7 @@ public class WebController {
 
 	@Autowired
     private LoanAppRepository loanAppRepository;
-	
-	/*
-	 * @Autowired private LoanAppUserDetails loanAppUserDetails;
-	 */
+
     // Home page
     @GetMapping("/")
     public String home() {
@@ -130,5 +127,17 @@ public class WebController {
         String username = authentication.getName();
         User user = userService.findByUsername(username);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/loan-details")
+    public ResponseEntity< List<LoanApplication>> getLoanDetailsForApproval(Authentication authentication) {
+        try {
+            String username = authentication.getName();
+            List<LoanApplication> loanApplication = loanService.findByLoanappid(username);
+            return ResponseEntity.ok(loanApplication);
+        }
+        catch (NoLoanHistoryFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
     }
 }

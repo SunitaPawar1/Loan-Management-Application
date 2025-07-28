@@ -20,7 +20,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/register","/loanApplication","/profile","/userprofile","/loan-history", "/h2-console/**").permitAll()
-                        .requestMatchers("/admin-dashboard/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/customer-dashboard/**").hasRole("CUSTOMER")
                         .anyRequest().authenticated()
                 )
